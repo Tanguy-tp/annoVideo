@@ -1,0 +1,106 @@
+/* ============================================================
+ * Annotation.jsdoc
+ * ------------------------------------------------------------
+ * Classe Annotation
+ * Représente une annotation temporelle marquée par un nom, 
+ * une couleur, une touche-clé, une liste d’objets Time, etc.
+ * Permet la modification, le suivi d'historique, la gestion 
+ * d’activation, et la sérialisation.
+ * Historique à jour
+ * ============================================================ */
+
+class Annotation {
+    // ATTRIBUTS PRIVÉS
+    #tolerance = 0.0001;                   // Tolérance utilisée pour les comparaisons temporelles
+
+    // ATTRIBUTS PUBLICS
+    name;                                  // Nom de l’annotation (string)
+    color;                                 // Couleur associée (string)
+    key;                                   // Touche associée à l'annotation (string, 1 caractère)
+    isDiscrete;                            // Booléen : annotation discrète ou continue ?
+    isActive;                              // Booléen : annotation active ou non ?
+    times;                                 // Liste des objets Time associés
+    
+    //attributs gérés en back-end, auto-assignés quand une Annotation est ajoutée à Application
+    history;                               // Gestionnaire d’historique (HistoryManager)
+    app;                                   // Référence vers l’instance Application 
+
+    // CONSTRUCTEUR
+    constructor(name, color, key, isDiscrete, isActive = true, history = null, app = null);
+
+    // ------------------ AJOUT D’INSTANTS ------------------
+
+    addTime(start, end = undefined);       // Crée et ajoute un nouvel objet Time
+                                           // -> si la catégorie est discrète, il n'y a pas besoin 
+                                           //    de spécifier une fin.
+    // -> met à jour l'historique
+
+    // ------------------ SUPPRESSION D’INSTANTS ------------------
+
+    removeTime(index);                     // Supprime un objet Time par index
+    // -> renvoie true si l'objet à bien été supprimé, faux sinon
+    // -> met à jour l'historique
+
+    removeTimeByStart(start);              // Supprime un objet Time par start approx.
+    // -> renvoie true si l'objet à bien été supprimé, faux sinon
+    // -> met à jour l'historique
+
+    clearTimes();                          // Vide le tableau times
+    // -> ne renvoie rien
+    // -> met à jour l'historique
+
+
+    // ------------------ SETTERS ------------------
+
+    setName(newName);                      // Modifie le nom
+    // -> ne renvoie rien
+    // -> met à jour l'historique
+
+    setColor(newColor);                    // Modifie la couleur
+    // -> ne renvoie rien
+    // -> met à jour l'historique
+
+    setKey(newKey);                        // Modifie la touche
+    // -> ne renvoie rien
+    // -> met à jour l'historique
+
+    setIsActive(newIsActive);              // Active/désactive (déclenche désactivation autres dans Application)
+    // -> ne renvoie rien
+    // -> met à jour l'historique
+
+    switchDiscrete();                      // Bascule entre continu/discret (et applique à tous les Time)
+    // -> renvoie isDiscrete après le switch
+    // -> met à jour l'historique
+
+    slideTimes(offset);                    // Décale tout les éléments de Times de offset
+    // -> ne renvoie rien
+    // -> met à jour l'historique
+    
+    // Méthodes back-end, ne sont pas censées être appelées en dehors du module
+    setHistory(history);                   // Associe un gestionnaire d’historique
+    setApp(app);                           // Associe une Application
+    
+    // ------------------ GETTERS ------------------Application
+
+    getName();                             // Retourne le nom
+    getColor();                            // Retourne la couleur
+    getKey();                              // Retourne la touche
+    getIsDiscrete();                       // Retourne isDiscrete
+    getIsActive();                         // Retourne isActive
+    getAllTimes();                         // Retourne le tableau des temps times
+    getTime(index);                        // Retourne le temps Time correspondant à un index
+    getTimeByStart(start);                 // Retourne le temps Time correspondant à un start (approximé)
+    getTimeIndexByStart(start);            // Retourne l’index d’un temps Time correspondant à son start (approximé)
+    getDurationSum();                      // Retourne la durée totale de tous les Time
+    getTimeCount();                        // Retourne la taille du tableau des temps times
+
+    // ------------------ UTILITAIRES ------------------
+
+    toString();                            // String lisible de l'annotation
+    clone();                               // Copie l’annotation (sans historique)
+
+    // ------------------ SERIALIZATION ------------------
+
+    serialize();                           // Convertit l’annotation en JSON sérialisable
+    static deserialize(data, history = null, app = null); // Reconstruit depuis JSON
+}

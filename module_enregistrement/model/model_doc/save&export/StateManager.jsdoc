@@ -1,0 +1,26 @@
+/* ============================================================ 
+ * StateManager.jsdoc
+ * ------------------------------------------------------------
+ * Classe StateManager
+ * Permet de sauvergarder un objet Application sous forme d'un fichier .json 
+ * et de charger une Application depuis un .json.
+ * Cette classe possède seulement deux méthodes "static", ce qui signifie 
+ * qu'elles doivent être appelée par la classe directement et pas par une 
+ * instance de celle-ci
+ * ============================================================ */
+
+class StateManager {
+
+    static save(app, filePath);     // sauvegarde l'instance d'Application app donnée en entrée.
+                                    // si aucun filePath n'est spécifié, enregistre par défaut
+                                    // dans un fichier 'app_state.json'.
+    // -> filePath peut être un string ou un objet path, la fonction ne renvoie rien
+    // commande pour appeler la fonction : StateManager.save(app, filePath);
+
+
+    static load(filePath);          // charge une instance d'Application contenue dans le fichier
+                                    // à la localisation filePath. 
+    // -> filePath peut être un string ou un objet path, la fonction renvoie l'objet Application généré
+    // commande pour appeler la fonction : StateManager.load(filePath);
+
+}

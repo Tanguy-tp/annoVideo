@@ -1,0 +1,71 @@
+/* ============================================================
+ * Time.jsdoc
+ * ------------------------------------------------------------
+ * Classe Time
+ * Représente une période ou un point temporel discret utilisé
+ * dans le système d'annotations. Gère les décalages, 
+ * modifications avec historique (undo/redo), et 
+ * sérialisation.
+ * Historique à jour
+ * ============================================================ */
+
+class Time {
+
+    // ATTRIBUTS PRIVÉS
+    #tolerance = 0.0001;                    // Tolérance minimale pour intervalle non discret
+
+    // ATTRIBUTS PUBLICS
+    start;                                  // Début du temps (float)
+    end;                                    // Fin du temps (float, undefined si isDiscrete)
+    isDiscrete;                             // Booléen indiquant un temps ponctuel
+    
+    //attributs gérés en back-end, auto-assignés quand un Time est ajoutée à une Application/Annotation
+    history;                                // (HistoryManager) Historique des actions (plutôt back-end)
+
+    // CONSTRUCTEUR
+    constructor(start, end, isDiscrete, history = null);
+
+
+    // ------------------ SETTERS ------------------
+
+    setStart(newStart);                     // Modifie le début 
+    // -> ne renvoie rien
+    // -> met à jour l'historique
+
+    setEnd(newEnd);                         // Modifie la fin 
+    // -> ne renvoie rien
+    // -> met à jour l'historique
+
+    switchDiscrete();                       // Change le mode discret/continu
+    // -> est censée être appelée par Annotation (ne met pas à jour l'historique)
+    // -> renvoie la valeur de isDiscrete après le switch
+
+    // ------------------ SLIDE ------------------
+
+    slide(newStart);                        // Décale le temps (avec historique)
+    // -> ne renvoie rien
+    slideWithoutHistory(newStart);          // Décale le temps (sans historique)
+    // -> ne renvoie rien
+    // Les deux fonctions font appel à une méthode interne (_slideInternal) qui a vocation à n'être appelée que par la classe Time elle-même
+
+
+    // ------------------ GETTERS ------------------
+
+    duration();                             // Renvoie la durée (0 si discret)
+
+    getStart();                             // Renvoie le début
+
+    getEnd();                               // Renvoie la fin ssi isDiscrete = false (temps continu)
+                                            // -> si isDiscrete = true (temps discret), met un log de warning et renvoie start
+                                            
+    getIsDiscrete;                          // Renvoie isDiscrete
+
+    // ------------------ UTILITY ------------------
+
+    toString();                             // Affiche l’objet en string lisible
+
+    // ------------------ SERIALIZATION ------------------
+
+    serialize();                            // Sérialise les données en objet JSON
+    static deserialize(data, history = null); // Reconstruit un objet Time depuis JSON
+}

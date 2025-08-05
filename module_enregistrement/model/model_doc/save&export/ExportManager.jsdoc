@@ -1,0 +1,38 @@
+/* ============================================================ 
+ * ExportManager.jsdoc
+ * ------------------------------------------------------------
+ * Module ExportManager
+ * Ce programme a pour objectif de prendre un objet application
+ * et de l'exporter dans un format utilisable par un tableur, 
+ * pour permettre aux chercheurs d'effectuer des analyses 
+ * statistiques sur leurs données.
+ * Il n'expose qu'une fonction "exportData" qui permet de 
+ * sélectionner les options d'export détaillées ci-dessous.
+ * ============================================================ */
+
+Deux versions disponibles : une en anglais, une en français, avec deux imports différents : 
+français : const { exportDataFr } = require('./model/Save&export/ExportManagerFr');
+anglais  : const { exportDataEn } = require('./model/Save&export/ExportManagerEn');
+
+
+function exportData(app, options)  // fonction d'export des données, exporte une application vers un fichier .xlsx ou .csv
+
+// argument option :
+
+    options = {
+        filePath,                   // chemin du fichier à sauvegarder (/!\ gère la création de nouveaux fichiers
+                                                                        mais ne gère pas la création de nouveaux dossiers)
+                                    // -> pas de valeur par défaut, doit être spécifié
+    
+        format = "xlsx",            // "xlsx" ou "csv" (xlsx par défaut)
+
+        layout = "wide",            // "long" ou "wide" ou "duration" ou "transitions" ou "coocurrences" (wide par défaut)
+                                    // -> exemples de ces formats dans le dossier
+
+        timeFormat = "float",       // "float" ou "hms" (float par défaut)
+                                    // -> définit si l'affichage du temps est en secondes ou sous forme hh:mm:ss
+
+        splitByCategory = false,    // si mis à "true", génère une feuille de calcul (xlsx) ou un fichier (csv) par annotation
+        
+        step = 0.1                    // pas temporel, utile pour les formats "wide", "transitions" et "coocurrences"
+    }

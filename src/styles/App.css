@@ -1,0 +1,69 @@
+.app-container {
+  padding: 32px;
+  width : 100%;
+}
+
+main {
+  margin-top: 24px;
+}
+
+.app-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.app-description {
+  font-size: 18px;
+  color: #aaaaaa;
+  margin-bottom: 32px;
+}
+
+.annotation-layout {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 32px;
+}
+
+.left-panel {
+  flex: 1;
+  max-width: 50%;
+}
+
+.right-panel {
+  flex: 1;
+  max-width: 50%;
+  background-color: #1c1c1c;
+  padding: 16px;
+  border: 1px dashed #555;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.video-placeholder {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .annotation-layout {
+    flex-direction: column;
+  }
+
+  
+  .right-panel {
+    justify-content : center;
+    align-items : center;
+    padding : 32px;
+  }
+}
+
+
+
+
+

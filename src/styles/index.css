@@ -1,0 +1,37 @@
+/* @format */
+/* postcss */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #433c47;
+  color: #f1f1f1;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@layer utilities {
+  @keyframes fade {
+    from {
+      opacity: 0;
+      transform: translateY(-0.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade {
+    animation: fade 0.3s ease-in-out;
+  }
+}

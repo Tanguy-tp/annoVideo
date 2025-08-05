@@ -1,0 +1,79 @@
+/* ============================================================ 
+ * Application.jsdoc
+ * ------------------------------------------------------------
+ * Classe Application
+ * Représente l’état global de l’éditeur d’annotations.
+ * Contient l’ensemble des catégories et annotations, et
+ * assure leur gestion (ajout, suppression, recherche),
+ * ainsi que la sérialisation et désérialisation.
+ * Gère également l’unicité des noms et l’historique commun.
+ * ============================================================ */
+
+class Application {
+    // ATTRIBUTS PUBLICS
+    annotationItems;                       // Tableau de Annotation ou AnnotationCategory
+    history;                               // Instance de HistoryManager (historique global)
+
+    // CONSTRUCTEUR
+    constructor();                         // Initialise une Application vide avec un gestionnaire d’historique
+
+    // ------------------ PRIVÉ ------------------
+
+    _makeUniqueName(baseName);             // Génère un nom unique (ajoute (1), (2), … si nécessaire)
+    _deactivateAnnotations(key, except);   // Désactive les annotations actives avec la même touche, sauf une
+
+    // ------------------ AJOUT ------------------
+
+    addCategory(name);                     // Crée et ajoute une nouvelle AnnotationCategory avec nom unique
+    // -> met à jour l'historique
+    addAnnotation(name, color, key, isDiscrete); 
+                                           // Crée et ajoute une nouvelle Annotation autonome
+    // -> met à jour l'historique
+    // -> Dans les deux cas, génère des noms uniques si doublons, indépendamment de la classe.
+
+    addAnnotationOrCategory(item);         // Ajoute une instance d’Annotation ou AnnotationCategory existante
+                                           // -> adapte automatiquement le nom, history, app
+    // -> met à jour l'historique
+
+    // ------------------ GETTERS ------------------
+
+    getAnnotationOrCategory();             // Retourne le tableau annotationCategories
+    getOnlyCategories();                   // Retourne un tableau contenant uniquement les AnnotationCategory 
+    getOnlyAnnotations();                  // Retourne un tableau contenant uniquement les Annotation autonomes
+
+    getCategoryByName(name);               // Cherche une catégorie par nom
+    getCategoryIndexByName(name);          // Cherche l’index d’un élément par nom
+
+    getAnnotationByPath(path);             // Cherche une annotation via son chemin ("catégorieName/annotationName")
+                                           // ou directement par nom si c’est une annotation autonome
+
+    getAnnotationByKey(key);               // Retourne l’annotation active liée à la touche donnée (si une existe)
+
+    // ------------------ SUPPRESSION ------------------
+
+    removeAnnotationOrCategoryByName(name); // Supprime un élément (annotation ou catégorie) par nom
+    // -> met à jour l'historique
+    removeAnnotationOrCategoryByIndex(index); // Supprime un élément (annotation ou catégorie) par index
+    // -> met à jour l'historique
+    // -> les deux renvoient true ou false selon que l'opération à réussi ou non
+
+    // ------------------ UTILITAIRE ------------------
+
+    clearAllItems();                  // Supprime toutes les annotations et catégories
+    // -> met à jour l'historique
+
+    // ------------------ HISTORIQUE ------------------
+
+    undo();                             // Revient à l'état précédent
+    redo();                             // Refait une action qui vient d'être annulée
+    canUndo();                          // Renvoie true si il y a des actions à annuler
+    canRedo();                          // Renvoie true si il y a des actions à refaire
+    // si il y a besoin de créer des méthodes plus compliquées qui ne sont pas implémentées ici, je pourrais générer 
+    // une doc pour la classe HistoryManager directement. (mais dans l'idée l'historique devrait être intégralement 
+    // géré à ce niveau, quitte à mettre à jour très régulièrement le module)
+
+    // ------------------ SÉRIALISATION ------------------
+
+    serialize();                           // Convertit l’état complet en JSON string
+    deserialize(jsonString);              // Recharge l’état depuis un JSON string (reconstruit catégories/annotations)
+}

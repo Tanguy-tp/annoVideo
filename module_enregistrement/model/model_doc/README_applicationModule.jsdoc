@@ -1,0 +1,24 @@
+ApplicationModule Version 1.1
+
+Application : classe principale, est pensée pour être instanciée une fois
+dans le programme et être partagée à toutes les autres parties.
+
+Le package "structures" comprend trois classes (Time, Annotation, 
+AnnotationCategories). Elles servent à stocker les informations principales,
+càd le contenu des annotations (les noms, couleurs, instances de temps, ...)
+
+Le package "history" comprend une unique classe HistoryManager, qui est 
+instanciée une fois à la création de l'instance d'Application. Il permet de 
+gérer un historique qui permet les undo/crtl-Z / redo/ctrl-Y. Pour l'instant 
+il n'a pas de documentation et est géré en interne, mais si besoin d'actions 
+plus compliquées non gérées par le module il peut être utilisé à l'extérieur 
+(mais il faudrait plutôt le gérer en interne pour la facilité d'usage du 
+module).
+
+Le package "save&export" comprend pour l'instant une classe StateManager, 
+mais a vocation à être complété par une classe qui gérera l'export en .csv.
+StateManager est une classe contenant deux méthodes save/load, et n'a pas 
+vocation à être instanciée.
+
+nouveauté V1.1 : History up to date pour toutes les classes Application, 
+AnnotationCategory, Annotation, Time ! 

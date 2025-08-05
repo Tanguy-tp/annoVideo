@@ -1,0 +1,133 @@
+.navbar {
+    width: 99%; /* prend toute la largeur de l'écran */
+    margin: 0;
+    padding: 16px 32px;
+    background-color: #edccf1;
+    border-bottom: 1px solid #444;
+    display: grid;
+    top: 0;
+    z-index: 999;
+    border-radius: 0 0 12px 12px; /* arrondis en bas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    align-items : center;
+    position : sticky;
+  }
+  
+  
+  .logo {
+    font-size: 21px;
+    font-weight: bold;
+    color: #8932b1;
+    grid-column : 2;
+    text-align : center;
+  }
+  
+  .nav-links {
+    grid-column : 3 ;
+    list-style: none;
+    display: flex;
+    justify-content : flex-end;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-links li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  
+  .nav-links li a:hover {
+    color: #b253d8;
+  }
+
+  .open-sidebar-btn {
+    z-index: 1100;
+    background-color: #770586;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: auto;
+    transition: opacity 0.3s ease;
+    justify-self : start;
+  }
+  
+  .open-sidebar-btn:hover {
+    opacity: 0.8;
+  }
+
+   
+  @media (max-width: 768px) {
+    .navbar {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px;
+      gap: 12px;
+    }
+  
+  
+    .nav-links {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      gap: 10px;
+    }
+  
+    .nav-links li {
+      width: 100%;
+    }
+  
+    .nav-links li a {
+      width: 100%;
+      display: block;
+      padding: 8px 0;
+    }
+  
+    .open-sidebar-btn {
+      align-self: flex-end;
+      margin-top: 8px;
+    }
+  }
+
+  .navbar-top {
+  display: grid;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+
+
+  
+  /* Mobile version */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: block;
+    }
+  
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      gap: 8px;
+    }
+  
+    .nav-links.open {
+      display: flex;
+    }
+  
+    .nav-links li {
+      width: 100%;
+    }
+  
+    .open-sidebar-btn {
+      align-self: flex-start;
+    }
+  }
+  

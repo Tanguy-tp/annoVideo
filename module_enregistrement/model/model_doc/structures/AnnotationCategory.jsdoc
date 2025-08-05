@@ -1,0 +1,81 @@
+/* ============================================================ 
+ * AnnotationCategory.jsdoc
+ * ------------------------------------------------------------
+ * Classe AnnotationCategory
+ * Représente un regroupement d’objets Annotation portant un nom 
+ * et une couleur. Peut contenir plusieurs annotations discrètes 
+ * ou continues. Permet d'ajouter, supprimer, rechercher, cloner 
+ * et sérialiser les annotations qu’elle contient.
+ * Historique à jour
+ * ============================================================ */
+
+class AnnotationCategory {
+    // ATTRIBUTS PUBLICS
+    name;                                  // Nom de la catégorie (string)
+    annotations;                           // Liste des Annotation de la catégorie
+    isActive;                              // Booléen : la catégorie est-elle active ?
+    
+    //attributs gérés en back-end, auto-assignés quand une AnnotationCategory est ajoutée à une Application
+    history;                               // Gestionnaire d’historique 
+    app;                                   // Référence vers l’instance Application 
+
+    // CONSTRUCTEUR
+    constructor(name, isActive = true, history = null, app = null);
+
+    // ------------------ SETTERS ------------------
+
+    setName(newName);                      // Modifie le nom de la catégorie
+    // -> met à jour l'historique
+    
+    setIsActive(newIsActive);              // Active/désactive la catégorie
+    // -> met à jour l'historique
+
+    // Méthodes back-end
+    setHistory(history);                   // Associe un gestionnaire d’historique
+    setApp(app);                           // Associe une Application
+
+    // ------------------ AJOUT D'ANNOTATIONS ------------------
+
+    addAnnotation(annotation);             // Ajoute une Annotation existante à la catégorie
+    // -> ajoute automatiquement le gestionnaire d’historique et l’application à l’annotation
+    // -> met à jour l'historique
+
+    addAnnotationByParams(name, color, key, isDiscrete);
+    // -> Crée une nouvelle Annotation et l’ajoute (nom rendu unique automatiquement)
+    // -> Retourne l'instance d'Annotation ajoutée
+    // -> met à jour l'historique
+
+    // ------------------ SUPPRESSION D'ANNOTATIONS ------------------
+
+    removeAnnotationByIndex(index);        // Supprime l'Annotation correspondant à index dans le tableau annotations
+    // -> met à jour l'historique
+    removeAnnotationByName(name);          // Supprime l'Annotation correspondant à name dans le tableau annotations
+    // -> met à jour l'historique
+    clearAnnotations();                    // Vide le tableau annotations
+    // -> met à jour l'historique
+
+    // ------------------ GETTERS ------------------
+
+    getName();                             // Retourne le nom de la catégorie
+    getColor();                            // Retourne la couleur associée
+    getIsActive();                         // Retourne l’état actif de la catégorie
+    getAnnotations();                      // Retourne le tableau annotations
+    getAnnotation(index);                  // Retourne l’Annotation correspondant à un index donné
+    getAnnotationByName(name);             // Retourne l’Annotation correspondant à un nom
+    getAnnotationCount();                  // Retourne le nombre d’annotations
+
+    // ------------------ UTILITAIRES ------------------
+
+    toString();                            // Retourne une représentation textuelle lisible
+    clone();                               // Clone la catégorie (copie profonde des annotations)
+
+    // ------------------ MÉTHODES PRIVÉES ------------------
+
+    _makeUniqueName(baseName);             // Génère un nom unique pour éviter les doublons
+
+    // ------------------ SERIALIZATION ------------------
+
+    serialize();                           // Sérialise la catégorie en objet JSON
+    static deserialize(data, history = null, app = null); 
+    // -> Reconstruit une catégorie depuis un objet JSON
+}
